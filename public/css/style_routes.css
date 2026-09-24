@@ -1,0 +1,79 @@
+.route-card {
+    height: 100%;
+    padding: 1.25rem;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.route-card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+}
+
+.route-card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.route-card .card-title {
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+.route-mode {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+/* From -> To stops with a connecting line */
+.route-stops {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1.5rem;
+    position: relative;
+}
+
+.route-stops::before {
+    content: "";
+    position: absolute;
+    left: 0.4rem;
+    top: 0.7rem;
+    bottom: 0.7rem;
+    border-left: 2px dashed var(--border);
+}
+
+.route-stops li {
+    position: relative;
+    padding: 0.3rem 0;
+    font-weight: 500;
+}
+
+.route-stops li::before {
+    content: "";
+    position: absolute;
+    left: -1.35rem;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    border-radius: 50%;
+    border: 3px solid var(--brand);
+    background: var(--surface);
+}
+
+.route-stops li.route-end::before {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.route-trip {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--brand);
+    font-weight: 600;
+}
+
+.route-card .route-map {
+    margin-top: 1rem;
+}

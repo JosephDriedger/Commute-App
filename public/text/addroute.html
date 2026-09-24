@@ -1,33 +1,41 @@
 <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title" id="exampleModalLongTitle">Add Route</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="hidemodal()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <button type="button" class="btn-close" aria-label="Close" onclick="hidemodal()"></button>
     </div>
-    <form>
+    <form id="routeForm" onsubmit="saveRoute(event)">
     <div class="modal-body">
-      
-        <div class="form-group">
-            <input type="text" class="form-control" id="nameInput" aria-describedby="name" placeholder="Enter Route Name" required>
+
+        <div class="mb-3">
+            <label for="nameInput" class="form-label">Route Name</label>
+            <input type="text" class="form-control" id="nameInput" placeholder="e.g. Home to BCIT">
         </div>
-        <div class="form-group">
-          <!-- Starting location address -->
-            <input type="text" class="form-control" id="startPlaceIdInput"aria-describedby="name" placeholder="Starting Address - Testing, int" required>
-        </div>  
-        <div class="form-group">
-          <!-- Ending location address-->
-          <input type="text" class="form-control" aria-describedby="name" placeholder="Ending Address - Testing, int" required>
+        <div class="mb-3">
+            <!-- Starting location address -->
+            <label for="startInput" class="form-label">Starting Address</label>
+            <input type="text" class="form-control" id="startInput" placeholder="5608 Clinton St, Burnaby" required>
         </div>
-        <div class="form-group">
+        <div class="mb-3">
+            <!-- Ending location address-->
+            <label for="endInput" class="form-label">Ending Address</label>
+            <input type="text" class="form-control" id="endInput" placeholder="3700 Willingdon Ave, Burnaby" required>
+        </div>
+        <div class="mb-3">
             <!-- Mode -->
-            
+            <label for="modeInput" class="form-label">Trip Mode</label>
+            <select class="form-select" id="modeInput">
+                <option value="Drive">Drive</option>
+                <option value="Bike">Bike</option>
+                <option value="Bus or SkyTrain">Bus or SkyTrain</option>
+                <option value="Walk">Walk</option>
+            </select>
         </div>
+        <p class="text-danger" id="routeMessage"></p>
 
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="hidemodal()">Close</button>
-      <button type="submit" class="btn btn-primary" onclick="saveRoute()">Save changes</button>
+      <button type="button" class="btn btn-light" onclick="hidemodal()">Cancel</button>
+      <button type="submit" class="btn btn-primary" id="saveRouteButton">Save Route</button>
     </div>
     </form>
   </div>

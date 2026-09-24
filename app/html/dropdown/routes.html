@@ -2,12 +2,13 @@
 <html lang="en">
 
 <head>
-    <title>Commute! App</title>
+    <title>Routes · Commute!</title>
     <meta name="comp1800 template" content="Commute!" />
 
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="img/icon.png" />
 
     <!-- Bootstrap Library CSS CDN go here -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -24,70 +25,80 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-
-    <!-- Other libraries go here -->
 
     <!-- Link to styles of your own -->
     <link rel="stylesheet" href="./css/style.css">
-    <script src="https://kit.fontawesome.com/6c79df5a80.js" crossorigin="anonymous"></script>
-
+    <script src="./js/theme.js"></script>
+    <link rel="stylesheet" href="./css/style_routes.css">
 </head>
 
 <body>
-    <!------------------------------>
-    <!-- Your HTML Layout go here -->
-    <!------------------------------>
-
     <nav id="navbarPlaceholder"></nav>
 
-    <div class="container">
-
-        <h2 class="float-left">Routes</h2>
-        <button class="btn btn-primary" type="button" onclick="showmodal()">
-            Add New Route (Demo)
-        </button>
-
-        
+    <main class="page">
+        <div class="page-header">
+            <div>
+                <h1>Routes</h1>
+                <p>The trips you take most often.</p>
+            </div>
+            <button class="btn btn-primary" type="button" onclick="showmodal()">
+                <span class="material-symbols-rounded">add</span> Add Route
+            </button>
+        </div>
 
         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="addroute" role="document">
-              
+
             </div>
         </div>
 
-
-        <div id="routeList routeCardGroup">
-            <template id="routeCardTemplate">
-                <div class="container">
-                    <div class="card py-2 mx-2" style="width: 1fr">
-                        <div class="card-body">
-                            <h5 class="card-title">Location</h5>
-                            <p class="card-text" class="route-info-1"></p>
-                            <p class="card-text" class="route-info-2"></p> 
-                            <p class="card-text" class="route-info-3"></p>
-                            <p class="card-text"text>test</p>
-                            <a href='#' class="btn btn-primary">Go</a>
+        <template id="routeCardTemplate">
+            <div class="col-md-6">
+                <div class="surface route-card">
+                    <div class="route-card-head">
+                        <span class="icon-tile"><span class="material-symbols-rounded route-icon">route</span></span>
+                        <div class="flex-grow-1">
+                            <h2 class="card-title">Route</h2>
+                            <span class="route-mode"></span>
+                            <span class="route-trip"></span>
                         </div>
+                        <button type="button" class="btn btn-ghost btn-sm route-edit" title="Edit Route" aria-label="Edit Route">
+                            <span class="material-symbols-rounded">edit</span>
+                        </button>
+                        <button type="button" class="btn btn-ghost danger btn-sm route-delete" title="Delete Route" aria-label="Delete Route">
+                            <span class="material-symbols-rounded">delete</span>
+                        </button>
                     </div>
+                    <ol class="route-stops">
+                        <li class="route-start"></li>
+                        <li class="route-end"></li>
+                    </ol>
+                    <button type="button" class="btn btn-light btn-sm route-map w-100">
+                        <span class="material-symbols-rounded">map</span> Show on Map
+                    </button>
                 </div>
-            </template>
-        </div>
+            </div>
+        </template>
 
-    </div>
-   
+        <div id="routeCardGroup" class="row g-3"></div>
+
+        <div id="routes-none" class="empty-state" hidden>
+            <span class="icon-tile"><span class="material-symbols-rounded">route</span></span>
+            <h2>No Routes Yet</h2>
+            <p>Save a route to keep your everyday trips one tap away.</p>
+            <button class="btn btn-primary" type="button" onclick="showmodal()">
+                <span class="material-symbols-rounded">add</span> Add Your First Route
+            </button>
+        </div>
+    </main>
 
     <!-- copyright footer -->
     <footer id="footerPlaceholder"></footer>
 
-    <!---------------------------------------------->
-    <!-- Your own JavaScript functions go here    -->
-    <!---------------------------------------------->
-
     <!-- Link to scripts of your own -->
     <script src="./js/firebaseAPI_TEAM31.js"></script>
     <script src="./js/script.js"></script>
+    <script src="./js/directions.js"></script>
     <script src="./js/skeleton.js"></script>
     <script src="./js/routes.js"></script>
 </body>
