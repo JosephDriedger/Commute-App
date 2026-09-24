@@ -10,6 +10,9 @@ function populateInfo() {
             //get the document for current user.
             currentUser.get()
                 .then(userDoc => {
+                    if (!userDoc.exists) {
+                        return;
+                    }
                     //get the data fields of the user
                     var userName = userDoc.data().name;
                     var userPhoneNum = userDoc.data().phoneNum;
@@ -52,24 +55,28 @@ function editUserInfo() {
 
 // Save User Information
 function saveUserInfo() {
-    userName = document.getElementById('nameInput').value;
-    userPhoneNum = document.getElementById('phoneNumInput').value;
-    userCity = document.getElementById('cityInput').value;
-    userProvince = document.getElementById('provinceInput').value;
-    userCountry = document.getElementById('countryInput').value;
-    userTransport = document.getElementById('transportInput').value;
+    let userName = document.getElementById('nameInput').value;
+    let userPhoneNum = document.getElementById('phoneNumInput').value;
+    let userCity = document.getElementById('cityInput').value;
+    let userProvince = document.getElementById('provinceInput').value;
+    let userCountry = document.getElementById('countryInput').value;
+    let userTransport = document.getElementById('transportInput').value;
 
-    currentUser.update({
+    currentUser.set({
         name: userName,
         phoneNum: userPhoneNum,
         city: userCity,
         province: userProvince,
         country: userCountry,
         transport: userTransport
-    })
+    }, { merge: true })
     .then(() => {
-        console.log("Document successfully updated!");
         document.getElementById('personalInfoFields').disabled = true;
+        showToast("Profile saved.");
+    })
+    .catch(error => {
+        console.log("Error updating profile: ", error);
+        showToast("Could not save your profile. Please try again.", "error");
     })
 }
 

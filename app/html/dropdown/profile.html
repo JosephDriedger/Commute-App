@@ -2,12 +2,13 @@
 <html lang="en">
 
     <head>
-        <title>Commute! App</title>
+        <title>Profile · Commute!</title>
         <meta name="comp1800 template" content="Commute!" />
 
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="img/icon.png" />
 
         <!-- Bootstrap Library CSS CDN go here -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -24,73 +25,70 @@
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script> 
-        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-
-        <!-- Other libraries go here -->
 
         <!-- Link to styles of your own -->
         <link rel="stylesheet" href="./css/style.css">
-        <link rel="stylesheet" href="./css/style_profile.css">
-
-        <style>
-        
-        </style>
-
+        <script src="./js/theme.js"></script>
     </head>
 
     <body>
-        <!------------------------------>
-        <!-- Your HTML Layout go here -->
-        <!------------------------------>
-
         <!-- Navbar -->
         <nav id="navbarPlaceholder"></nav>
 
         <!-- Content -->
-        <div class="container">
-            <h1>Profile </h1>
-            <form>
-                <fieldset class="mb-3" id="personalInfoFields" disabled>
-                    <div class="form-group">
-                        <label >Name</label>
-                        <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
-                    </div>
-                    <div class="form-group">
-                        <label >Phone Number</label>
-                        <input type="text" id="phoneNumInput" class="form-control" placeholder="Enter your phone number">
-                    </div>
-                    <div class="form-group">
-                        <label >City</label>
-                        <input type="text" id="cityInput" class="form-control" placeholder="Enter your city">
-                    </div>
-                    <div class="form-group">
-                        <label >State/Province</label>
-                        <input type="text" id="provinceInput" class="form-control" placeholder="Enter your state/province">
-                    </div>
-                    <div class="form-group">
-                        <label >Country</label>
-                        <input type="text" id="countryInput" class="form-control" placeholder="Enter your country">
-                    </div>
-                    <div class="form-group">
-                        <label >Main Method of Transportation</label>
-                        <input type="text" id="transportInput" class="form-control" placeholder="Enter your main method of transportation">
+        <main class="page page-narrow">
+            <div class="page-header">
+                <div>
+                    <h1>Profile</h1>
+                    <p>Your details help us personalize your commute.</p>
+                </div>
+            </div>
+            <form class="surface" onsubmit="return false;">
+                <fieldset id="personalInfoFields" disabled>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="nameInput" class="form-label">Name</label>
+                            <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="phoneNumInput" class="form-label">Phone Number</label>
+                            <input type="tel" id="phoneNumInput" class="form-control" placeholder="604-555-0123">
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="transportInput" class="form-label">Main Method of Transportation</label>
+                            <input type="text" id="transportInput" class="form-control" placeholder="e.g. SkyTrain" list="transportOptions">
+                            <datalist id="transportOptions">
+                                <option value="Drive">
+                                <option value="Bike">
+                                <option value="Bus or SkyTrain">
+                                <option value="Walk">
+                            </datalist>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="cityInput" class="form-label">City</label>
+                            <input type="text" id="cityInput" class="form-control" placeholder="Burnaby">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="provinceInput" class="form-label">State/Province</label>
+                            <input type="text" id="provinceInput" class="form-control" placeholder="BC">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="countryInput" class="form-label">Country</label>
+                            <input type="text" id="countryInput" class="form-control" placeholder="Canada">
+                        </div>
                     </div>
                 </fieldset>
-                <div class="d-flex justify-content-end mt-5">
-                    <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
-                    <span style="width: 10px"></span>
-                    <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <button type="button" class="btn btn-light" onclick="editUserInfo()">
+                        <span class="material-symbols-rounded">edit</span> Edit
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="saveUserInfo()">Save</button>
                 </div>
             </form>
-        </div>
+        </main>
 
         <!-- copyright footer -->
         <footer id="footerPlaceholder"></footer>
-
-        <!---------------------------------------------->
-        <!-- Your own JavaScript functions go here    -->
-        <!---------------------------------------------->
 
         <!-- Link to scripts of your own -->
         <script src="./js/firebaseAPI_TEAM31.js"></script>

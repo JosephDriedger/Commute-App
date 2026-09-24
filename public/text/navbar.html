@@ -1,104 +1,61 @@
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<nav class="navbar navbar-expand-lg navbar-light bg-secondary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <a id="icon" onclick="goToMainOrHome()"><img src="img/icon.png" height="36" />
-            Commute!</a>
+<nav class="navbar navbar-expand-lg app-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="#" onclick="goToMainOrHome(); return false;">
+            <img src="img/icon.png" width="36" height="36" alt="" />
+            Commute!
         </a>
-        <button class="navbar-toggler desktop-nav" type="button" data-bs-toggle="collapse"
+
+        <!-- Signed in -->
+        <button class="navbar-toggler signed-in-only" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="material-symbols-rounded">menu</span>
         </button>
-        <div class="collapse navbar-collapse desktop-nav" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" onclick="goToUserOnlyPage('./profile')">Profile</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                <li class="nav-item signed-in-only nav-primary">
+                    <a class="nav-link" href="./main"><span class="material-symbols-rounded">map</span>Map</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" onclick="goToUserOnlyPage('./routes')">Routes</a>
+                <li class="nav-item signed-in-only nav-primary">
+                    <a class="nav-link" href="./routes"><span class="material-symbols-rounded">route</span>Routes</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" onclick="goToUserOnlyPage('./notifications')">Notifications <span id="notify-num">0</span></a>
+                <li class="nav-item signed-in-only nav-primary">
+                    <a class="nav-link" href="./schedule"><span class="material-symbols-rounded">calendar_month</span>Schedule</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" onclick="goToUserOnlyPage('./schedule')">Schedule</a>
+                <li class="nav-item signed-in-only nav-primary">
+                    <a class="nav-link" href="./notifications"><span class="material-symbols-rounded">notifications</span>Alerts <span class="notify-num" hidden></span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" onclick="goToUserOnlyPage('./passwordReset')">Password Reset</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" onclick="goToUserOnlyPage('./privacy')">Privacy</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" onclick="goToUserOnlyPage('./language')">Language</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" onclick="goToUserOnlyPage('./help')">Help</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" onclick="goToUserOnlyPage('./themes')">Themes</a>
-                </li>
-                <li class="nav-item text-warning">
-                    <a class="nav-link" onclick="signOut()">Sign Out</a>
+                <li class="nav-item dropdown signed-in-only ms-lg-2">
+                    <a class="nav-link dropdown-toggle" href="#" id="accountMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="avatar" id="navAvatar">?</span>
+                        <span class="d-lg-none">Account</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountMenu">
+                        <li><a class="dropdown-item" href="./profile"><span class="material-symbols-rounded">person</span>Profile</a></li>
+                        <li><a class="dropdown-item" href="./places"><span class="material-symbols-rounded">location_on</span>Places</a></li>
+                        <li><a class="dropdown-item" href="./passwordReset"><span class="material-symbols-rounded">lock_reset</span>Password Reset</a></li>
+                        <li><a class="dropdown-item" href="./themes"><span class="material-symbols-rounded">palette</span>Themes</a></li>
+                        <li><a class="dropdown-item" href="./language"><span class="material-symbols-rounded">translate</span>Language</a></li>
+                        <li><a class="dropdown-item" href="./privacy"><span class="material-symbols-rounded">shield</span>Privacy</a></li>
+                        <li><a class="dropdown-item" href="./help"><span class="material-symbols-rounded">help</span>Help</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item danger" href="#" onclick="signOut(); return false;"><span class="material-symbols-rounded">logout</span>Sign Out</a></li>
+                    </ul>
                 </li>
             </ul>
+        </div>
+
+        <!-- Signed out: log in button -->
+        <div class="signed-out-only ms-auto">
+            <a class="btn btn-primary" href="./login">Log In</a>
         </div>
     </div>
 </nav>
 
-<div class="mobile-nav navbar-expand-lg navbar-light bg-secondary">
-    <div class="collapse navbar-collapse mobile-nav-collapse navbar-light " id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            
-            <li class="nav-item">
-                <a class="nav-link" onclick="goToUserOnlyPage('./passwordReset')">Password Reset</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="goToUserOnlyPage('./privacy')">Privacy</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="goToUserOnlyPage('./language')">Language</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="goToUserOnlyPage('./help')">Help</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="goToUserOnlyPage('./themes')">Themes</a>
-            </li>
-            <li class="nav-item text-warning">
-                <a class="nav-link" onclick="signOut()">Sign Out</a>
-            </li>
-        </ul>
-    </div>
-    <div class="mobile-nav navbar-light bg-secondary mobile-nav-grid">
-        <li class="nav-item">
-            <a class="nav-link" onclick="goToUserOnlyPage('./main')"><span class="material-symbols-outlined">
-                map
-                </span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" onclick="goToUserOnlyPage('./routes')"><span class="material-symbols-outlined">
-                format_list_bulleted
-                </span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" onclick="goToUserOnlyPage('./notifications')"><span class="material-symbols-outlined">
-                notifications
-                </span> <span id="notify-num">0</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" onclick="goToUserOnlyPage('./schedule')"><span class="material-symbols-outlined">
-                calendar_month
-                </span></a>
-        </li>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="material-symbols-outlined">
-                    menu
-                    </span>
-            </button>
-        
-    </div>
+<!-- Mobile bottom tab bar -->
+<div class="tabbar signed-in-only">
+    <a href="./main"><span class="material-symbols-rounded">map</span>Map</a>
+    <a href="./routes"><span class="material-symbols-rounded">route</span>Routes</a>
+    <a href="./schedule"><span class="material-symbols-rounded">calendar_month</span>Schedule</a>
+    <a href="./notifications"><span class="material-symbols-rounded">notifications</span>Alerts<span class="notify-num" hidden></span></a>
 </div>

@@ -2,12 +2,13 @@
 <html lang="en">
 
     <head>
-        <title>Commute! App</title>
+        <title>Themes · Commute!</title>
         <meta name="comp1800 template" content="Commute!" />
 
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="img/icon.png" />
 
         <!-- Bootstrap Library CSS CDN go here -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -24,38 +25,57 @@
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script> 
-        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-
-        <!-- Other libraries go here -->
 
         <!-- Link to styles of your own -->
         <link rel="stylesheet" href="./css/style.css">
-
-        <style>
-        
-        </style>
-
+        <script src="./js/theme.js"></script>
     </head>
 
     <body>
-        <!------------------------------>
-        <!-- Your HTML Layout go here -->
-        <!------------------------------>
-
         <nav id="navbarPlaceholder"></nav>
+
+        <main class="page page-narrow">
+            <div class="page-header">
+                <div>
+                    <h1>Themes</h1>
+                    <p>Personalize how Commute! looks.</p>
+                </div>
+            </div>
+
+            <div class="theme-options" role="radiogroup" aria-label="Theme">
+                <button type="button" class="surface theme-option" data-theme="system" role="radio" aria-checked="false">
+                    <span class="theme-preview system"></span>
+                    <span class="theme-name">
+                        <span class="material-symbols-rounded">contrast</span> System
+                    </span>
+                    <span class="theme-hint">Match Your Device</span>
+                </button>
+                <button type="button" class="surface theme-option" data-theme="light" role="radio" aria-checked="false">
+                    <span class="theme-preview light"></span>
+                    <span class="theme-name">
+                        <span class="material-symbols-rounded">light_mode</span> Light
+                    </span>
+                    <span class="theme-hint">Always Light</span>
+                </button>
+                <button type="button" class="surface theme-option" data-theme="dark" role="radio" aria-checked="false">
+                    <span class="theme-preview dark"></span>
+                    <span class="theme-name">
+                        <span class="material-symbols-rounded">dark_mode</span> Dark
+                    </span>
+                    <span class="theme-hint">Always Dark</span>
+                </button>
+            </div>
+            <p class="text-muted small mt-3">Your choice is saved on this device.</p>
+        </main>
 
         <!-- copyright footer -->
         <footer id="footerPlaceholder"></footer>
-
-        <!---------------------------------------------->
-        <!-- Your own JavaScript functions go here    -->
-        <!---------------------------------------------->
 
         <!-- Link to scripts of your own -->
         <script src="./js/firebaseAPI_TEAM31.js"></script>
         <script src="./js/script.js"></script>
         <script src="./js/skeleton.js"></script>
+        <script src="./js/themes.js"></script>
     </body>
 
 </html>
