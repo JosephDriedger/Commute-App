@@ -17,10 +17,11 @@ var uiConfig = {
               email: user.email
             }).then(function () {
               console.log("New user added to firestore");
-              window.location.assign("./main");
+              window.location.assign("./main?welcome=1");
             })
             .catch(function (error) {
               console.log(error);
+              window.location.assign("./main?welcome=1");
             })
 
         } else {
@@ -31,7 +32,10 @@ var uiConfig = {
       uiShown: function() {
         // The widget is rendered.
         // Hide the loader.
-        document.getElementById('loader').style.display = 'none';
+        var loader = document.getElementById('loader');
+        if (loader) {
+          loader.style.display = 'none';
+        }
       }
     },
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
@@ -45,11 +49,7 @@ var uiConfig = {
     //   firebase.auth.GithubAuthProvider.PROVIDER_ID,
       firebase.auth.EmailAuthProvider.PROVIDER_ID,
     //   firebase.auth.PhoneAuthProvider.PROVIDER_ID
-    ],
-    // Terms of service url.
-    tosUrl: '<your-tos-url>',
-    // Privacy policy url.
-    privacyPolicyUrl: '<your-privacy-policy-url>'
+    ]
   };
 
 ui.start('#firebaseui-auth-container', uiConfig);
