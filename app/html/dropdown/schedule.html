@@ -2,12 +2,13 @@
 <html lang="en">
 
 <head>
-  <title>Commute! App</title>
+  <title>Schedule · Commute!</title>
   <meta name="comp1800 template" content="Commute!" />
 
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="img/icon.png" />
 
   <!-- Bootstrap Library CSS CDN go here -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -21,88 +22,90 @@
   <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
   <!-------------------------------------------------------->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-
-
-  <!-- Other libraries go here -->
 
   <!-- Link to styles of your own -->
   <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/theme.js"></script>
   <link rel="stylesheet" href="./css/style_schedule.css">
 </head>
 
 <body>
-  <!------------------------------>
-  <!-- Your HTML Layout go here -->
-  <!------------------------------>
-
   <nav id="navbarPlaceholder"></nav>
 
-  <div class="container">
-    <h1 class="form_name">Your Schedules</h1>
-  </div>
+  <main class="page page-wide">
+    <div class="page-header">
+      <div>
+        <h1>Schedule</h1>
+        <p>Your week at a glance. Trips can repeat every week.</p>
+      </div>
+      <button class="btn btn-primary" type="button" onclick="openScheduleForm()">
+        <span class="material-symbols-rounded">add</span> Add Trip
+      </button>
+    </div>
 
-  <button onclick="document.getElementById('id_add').style.display='block'" style="width:auto;">Add</button>
-  <!--
-    <template id="viewScheduleform">
-    
-    <ul class ="list-inline">
-      <h6>Schedule:</h6>
-      <li class="date"></li>
-      <li class="time"></li>
-      <li class="note"></li>
-    </ul>
-  </template>
--->
+    <div class="week-bar">
+      <button class="btn btn-ghost btn-sm" type="button" onclick="showWeek(-1)" title="Previous Week" aria-label="Previous Week">
+        <span class="material-symbols-rounded">chevron_left</span>
+      </button>
+      <strong id="weekLabel"></strong>
+      <button class="btn btn-ghost btn-sm" type="button" onclick="showWeek(1)" title="Next Week" aria-label="Next Week">
+        <span class="material-symbols-rounded">chevron_right</span>
+      </button>
+      <button class="btn btn-light btn-sm ms-auto" type="button" onclick="showThisWeek()">This Week</button>
+    </div>
 
-
-  <template id="viewScheduleform">
-
-    <table class="table table-striped">
-    
-      <tr>
-      <td class="date"></td>
-      <td class="time"></td>
-      <td class="note"></td>
-      </tr>
-    </table>
-  </template>
-
-
-  <div class="container">
-    <div id="viewScheduleGroup" class="col-xs-12 col-md-8"></div>
-    <a class="btn btn-info read-more" style="float: left">Get more</a>
-  </div>
-
-  <div id="id_add" class="modal">
-    <div class="container">
-      <div class="card">
-        <div class="form__name">
-          Set Schedule
+    <template id="tripChipTemplate">
+      <article class="trip-chip">
+        <div class="chip-head">
+          <span class="chip-time"></span>
+          <span class="material-symbols-rounded chip-mode">route</span>
+          <span class="material-symbols-rounded chip-repeat" title="Repeats Weekly">repeat</span>
+          <button type="button" class="btn btn-ghost btn-sm chip-delete" title="Delete Trip" aria-label="Delete Trip">
+            <span class="material-symbols-rounded">close</span>
+          </button>
         </div>
-        <div class="time__container">
-          <form class="form__time" method="get"></form>
-          <div class="section">
-            <div class="box">
-              1
-            </div><span>Date &amp; Time</span>
-          </div>
-          <fieldset class="dateAndTime">
-            <div class="date">
-              <label for="date">Date</label> 
+        <h2 class="chip-destination"></h2>
+        <span class="chip-leave"></span>
+      </article>
+    </template>
+
+    <div id="weekGrid" class="week-grid"></div>
+
+    <div id="week-empty" class="empty-state mt-3" hidden>
+      <span class="icon-tile accent"><span class="material-symbols-rounded">calendar_month</span></span>
+      <h2>Nothing Planned This Week</h2>
+      <p>Add a trip to any day, and tick Repeat Weekly for the ones you make every week.</p>
+      <button class="btn btn-primary" type="button" onclick="openScheduleForm()">
+        <span class="material-symbols-rounded">add</span> Add a Trip
+      </button>
+    </div>
+  </main>
+
+  <!-- Add schedule form -->
+  <div id="id_add" class="modal fade" tabindex="-1" aria-labelledby="scheduleFormTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <form id="scheduleForm" class="modal-content" onsubmit="saveSchedule(event)">
+        <div class="modal-header">
+          <h5 class="modal-title" id="scheduleFormTitle">Add Schedule</h5>
+          <button type="button" class="btn-close" aria-label="Close" onclick="closeScheduleForm()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="step"><span class="step-num">1</span>Date &amp; Time</div>
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6">
+              <label for="dateInput" class="form-label">Date</label>
               <input id="dateInput" class="form-control" type="date" required>
             </div>
-            <div class="time">
-              <label for="time">Time</label> 
+            <div class="col-sm-6">
+              <label for="timeInput" class="form-label">Time</label>
               <input id="timeInput" class="form-control" type="time" required>
             </div>
-            <div class="timezone">
-              <label for="timezone">Timezone</label> 
-              <select name="timezone" id="timezoneInput" required>
+            <div class="col-12">
+              <label for="timezoneInput" class="form-label">Timezone</label>
+              <select name="timezone" id="timezoneInput" class="form-select" required>
                 <option value="-12">
                   (GMT -12:00) Eniwetok, Kwajalein
                 </option>
@@ -115,7 +118,7 @@
                 <option value="-9">
                   (GMT -9:00) Alaska
                 </option>
-                <option value="-8">
+                <option selected="selected" value="-8">
                   (GMT -8:00) Pacific Time (US &amp; Canada)
                 </option>
                 <option value="-7">
@@ -148,7 +151,7 @@
                 <option value="-1">
                   (GMT -1:00 hour) Azores, Cape Verde Islands
                 </option>
-                <option selected="selected" value="0">
+                <option value="0">
                   (GMT) Western Europe Time, London, Lisbon,
                   Casablanca, Greenwich
                 </option>
@@ -217,75 +220,54 @@
                 </option>
               </select>
             </div>
-          </fieldset>
-          <fieldset class="scheduleNotes">
-            <div class="section">
-              <div class="box">
-                2
-              </div>
-              <span>Your Schedule Notes</span>
+          </div>
+
+          <div class="form-check form-switch mb-4">
+            <input class="form-check-input" type="checkbox" id="repeatWeekly">
+            <label class="form-check-label" for="repeatWeekly">Repeat Every Week</label>
+          </div>
+
+          <div class="step"><span class="step-num">2</span>Route Information</div>
+          <div class="row g-3 mb-4">
+            <div class="col-12" id="routePickerWrap" hidden>
+              <label for="routePicker" class="form-label">Use a Saved Route</label>
+              <select id="routePicker" class="form-select" onchange="applyRouteChoice()">
+                <option value="">Enter a destination myself</option>
+              </select>
+              <small class="text-muted">Picking a route lets us tell you when to leave.</small>
             </div>
-            <textarea id="noteInput" placeholder="e.g. Please do .. Also, .." cols="50" rows="5" required></textarea>
-          </fieldset>
-          <fieldset class="routeInfo">
-            <div class="section">
-              <div class="box">
-                3
-              </div>
-              <span>Route Information</span>
+            <div class="col-sm-8">
+              <label for="address" class="form-label">Your Destination</label>
+              <input required placeholder="3700 Willingdon Ave, Burnaby" id="address" class="form-control" type="text">
             </div>
-            <div class="cname">
-              <label for="cname">Your destination</label> 
-              <input required placeholder="3700 Willingdon Ave, Burnaby" id="address"
-                type="text">
+            <div class="col-sm-4">
+              <label for="postCode" class="form-label">Post Code</label>
+              <input id="postCode" class="form-control" type="text" placeholder="V5G 3H2" required>
             </div>
-            <div class="cnum">
-              <label for="cnum">Post Code</label> 
-              <input id="postCode" type="text" placeholder="V5G3H2" required>
-              <span id="result"></span>
+            <div class="col-12">
+              <label for="tripCode" class="form-label">Trip Mode</label>
+              <select id="tripCode" class="form-select" required>
+                <option value="Drive">Drive</option>
+                <option value="Bike">Bike</option>
+                <option value="Bus or SkyTrain">Bus or SkyTrain</option>
+                <option value="Walk">Walk</option>
+              </select>
             </div>
-            <div class="cname">
-              <label for="cname">Trip Mode</label> 
-              <select name="timezone" id="tripCode" required>
-                <option value="Drive">
-                  Drive
-                </option>
-                <option value="Bike">
-                  Bike
-                </option>
-                <option value="Bus or SkyTrain">
-                  Bus or SkyTrain
-                </option>
-            </div>
-          </fieldset>
-          <input class="btn btn-info" type="button" value="Submit" onclick="saveSchedule()">
-          </form>
+          </div>
+
+          <div class="step"><span class="step-num">3</span>Notes</div>
+          <textarea id="noteInput" class="form-control" placeholder="e.g. Bring laptop, meet Sam at the station" rows="3"></textarea>
         </div>
-      </div>
+        <div class="modal-footer">
+          <button class="btn btn-light" type="button" onclick="closeScheduleForm()">Cancel</button>
+          <button class="btn btn-primary" type="submit" id="saveScheduleButton">Save Schedule</button>
+        </div>
+      </form>
     </div>
   </div>
 
-
   <!-- copyright footer -->
   <footer id="footerPlaceholder"></footer>
-
-  <script>
-
-    var modal = document.getElementById('id_add');
-
-    window.onclick = function (event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
-
-
-  </script>
-
-
-  <!---------------------------------------------->
-  <!-- Your own JavaScript functions go here    -->
-  <!---------------------------------------------->
 
   <!-- Link to scripts of your own -->
   <script src="./js/firebaseAPI_TEAM31.js"></script>
