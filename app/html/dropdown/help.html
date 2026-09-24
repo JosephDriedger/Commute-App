@@ -2,12 +2,13 @@
 <html lang="en">
 
     <head>
-        <title>Commute! App</title>
+        <title>Help · Commute!</title>
         <meta name="comp1800 template" content="Commute!" />
 
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="img/icon.png" />
 
         <!-- Bootstrap Library CSS CDN go here -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -24,33 +25,125 @@
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script> 
-        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-
-        <!-- Other libraries go here -->
 
         <!-- Link to styles of your own -->
-        <link rel="stylesheet" href="./styles/style.css">
-
-        <style>
-        
-        </style>
-
+        <link rel="stylesheet" href="./css/style.css">
+        <script src="./js/theme.js"></script>
     </head>
 
     <body>
-        <!------------------------------>
-        <!-- Your HTML Layout go here -->
-        <!------------------------------>
-
         <nav id="navbarPlaceholder"></nav>
+
+        <main class="page page-narrow">
+            <div class="page-header">
+                <div>
+                    <h1>Help</h1>
+                    <p>Answers to common questions about Commute!</p>
+                </div>
+            </div>
+
+            <div class="accordion" id="helpAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="q0">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a0" aria-expanded="true" aria-controls="a0">
+                            How Do I Save a Route?
+                        </button>
+                    </h2>
+                    <div id="a0" class="accordion-collapse collapse show" aria-labelledby="q0" data-bs-parent="#helpAccordion">
+                        <div class="accordion-body">
+                            Open <a href="./routes">Routes</a> and select <strong>Add Route</strong>. Enter where you start,
+                            where you're going and how you travel, then save.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="qd">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ad" aria-expanded="false" aria-controls="ad">
+                            How Do I Get Directions?
+                        </button>
+                    </h2>
+                    <div id="ad" class="accordion-collapse collapse" aria-labelledby="qd" data-bs-parent="#helpAccordion">
+                        <div class="accordion-body">
+                            On the <a href="./main">Map</a>, set a starting point and a destination, pick how you travel,
+                            then choose <strong>Get Directions</strong>. You will get the travel time, the distance and
+                            step by step directions, and you can save the trip as a route. Transit times are not
+                            available, so transit shows the driving route instead.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="qp">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ap" aria-expanded="false" aria-controls="ap">
+                            How Do I Save a Location?
+                        </button>
+                    </h2>
+                    <div id="ap" class="accordion-collapse collapse" aria-labelledby="qp" data-bs-parent="#helpAccordion">
+                        <div class="accordion-body">
+                            Open <a href="./places">Places</a> from the account menu and select <strong>Add Place</strong>.
+                            Give it a name like Home or School, then pick your address from the suggestions. Saved places
+                            appear at the top of the list whenever you plan a trip on the map.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="qw">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#aw" aria-expanded="false" aria-controls="aw">
+                            How Do Weekly Trips Work?
+                        </button>
+                    </h2>
+                    <div id="aw" class="accordion-collapse collapse" aria-labelledby="qw" data-bs-parent="#helpAccordion">
+                        <div class="accordion-body">
+                            <a href="./schedule">Schedule</a> shows one week at a time. Select the plus on any day to add a
+                            trip, and tick <strong>Repeat Every Week</strong> for something you do every week, like a class
+                            or a shift. Repeating trips show up on that weekday from then on. Pick a saved route on the form
+                            and we can also tell you when to leave.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="q1">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a1" aria-expanded="false" aria-controls="a1">
+                            How Do I Plan a Trip?
+                        </button>
+                    </h2>
+                    <div id="a1" class="accordion-collapse collapse" aria-labelledby="q1" data-bs-parent="#helpAccordion">
+                        <div class="accordion-body">
+                            Go to <a href="./schedule">Schedule</a> and select <strong>Add Trip</strong>, or the plus on the day you want.
+                            Pick a time and destination. Past trips are cleared automatically a week after they happen.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="q2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2" aria-expanded="false" aria-controls="a2">
+                            Where Do Alerts Come From?
+                        </button>
+                    </h2>
+                    <div id="a2" class="accordion-collapse collapse" aria-labelledby="q2" data-bs-parent="#helpAccordion">
+                        <div class="accordion-body">
+                            Incidents that affect your routes appear on the <a href="./notifications">Alerts</a> page,
+                            along with a suggestion to help you stay on time. The badge in the menu shows how many you have.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="q3">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3" aria-expanded="false" aria-controls="a3">
+                            I Forgot My Password.
+                        </button>
+                    </h2>
+                    <div id="a3" class="accordion-collapse collapse" aria-labelledby="q3" data-bs-parent="#helpAccordion">
+                        <div class="accordion-body">
+                            On the sign-in screen, enter your email and choose <strong>Trouble signing in?</strong> to get a
+                            reset link. If you're already signed in, use <a href="./passwordReset">Password Reset</a>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
 
         <!-- copyright footer -->
         <footer id="footerPlaceholder"></footer>
-
-        <!---------------------------------------------->
-        <!-- Your own JavaScript functions go here    -->
-        <!---------------------------------------------->
 
         <!-- Link to scripts of your own -->
         <script src="./js/firebaseAPI_TEAM31.js"></script>

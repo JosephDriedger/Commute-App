@@ -2,12 +2,13 @@
 <html lang="en">
 
     <head>
-        <title>Commute! App</title>
+        <title>Privacy · Commute!</title>
         <meta name="comp1800 template" content="Commute!" />
 
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="img/icon.png" />
 
         <!-- Bootstrap Library CSS CDN go here -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -24,38 +25,56 @@
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script> 
-        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-
-        <!-- Other libraries go here -->
 
         <!-- Link to styles of your own -->
         <link rel="stylesheet" href="./css/style.css">
-
-        <style>
-        
-        </style>
-
+        <script src="./js/theme.js"></script>
     </head>
 
     <body>
-        <!------------------------------>
-        <!-- Your HTML Layout go here -->
-        <!------------------------------>
-
         <nav id="navbarPlaceholder"></nav>
+
+        <main class="page page-narrow">
+            <div class="page-header">
+                <div>
+                    <h1>Privacy</h1>
+                    <p>What Commute! stores and who can see it.</p>
+                </div>
+            </div>
+
+            <div class="surface mb-3 setting-row align-items-start">
+                <span class="icon-tile"><span class="material-symbols-rounded">person</span></span>
+                <div>
+                    <h2 class="h6 mb-1">Your Account</h2>
+                    <p class="text-muted mb-0">Your name and email, plus any profile details you choose to add
+                        (phone number, city, province, country and main method of transportation).</p>
+                </div>
+            </div>
+            <div class="surface mb-3 setting-row align-items-start">
+                <span class="icon-tile accent"><span class="material-symbols-rounded">route</span></span>
+                <div>
+                    <h2 class="h6 mb-1">Your Trips</h2>
+                    <p class="text-muted mb-0">The places, routes and trips you save, and your alert settings.
+                        One-off trips are deleted automatically a week after they happen.</p>
+                </div>
+            </div>
+            <div class="surface mb-3 setting-row align-items-start">
+                <span class="icon-tile danger"><span class="material-symbols-rounded">lock</span></span>
+                <div>
+                    <h2 class="h6 mb-1">Who Can See It</h2>
+                    <p class="text-muted mb-0">Your data is stored with Google Firebase and is only accessible to you
+                        while you're signed in to your account.</p>
+                </div>
+            </div>
+        </main>
 
         <!-- copyright footer -->
         <footer id="footerPlaceholder"></footer>
 
-        <!---------------------------------------------->
-        <!-- Your own JavaScript functions go here    -->
-        <!---------------------------------------------->
-
         <!-- Link to scripts of your own -->
         <script src="./js/firebaseAPI_TEAM31.js"></script>
-        <script src="./js/skeleton.js"></script>
         <script src="./js/script.js"></script>
+        <script src="./js/skeleton.js"></script>
     </body>
 
 </html>
