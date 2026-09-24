@@ -1,0 +1,73 @@
+.place-list {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.place-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    flex-wrap: wrap;
+}
+
+.place-body {
+    flex: 1;
+    min-width: 12rem;
+}
+
+.place-label {
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+.place-address {
+    color: var(--muted);
+    margin: 0.15rem 0 0;
+    font-size: 0.9rem;
+}
+
+.place-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+/* Address suggestions inside the form */
+.place-suggestions {
+    display: grid;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.place-suggestion {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+    text-align: left;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.7rem;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.place-suggestion:hover {
+    border-color: var(--brand);
+}
+
+.place-suggestion small {
+    display: block;
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.place-suggestion .material-symbols-rounded {
+    color: var(--brand);
+    font-size: 20px;
+}
