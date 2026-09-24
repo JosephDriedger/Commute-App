@@ -1,61 +1,51 @@
-main {
-    align-content: left;
-}
-
-article {
-    background-color: white;
-    padding: 10px;
-}
-
-.container {
-    display: block;
+.notification-list {
+    display: grid;
+    gap: 0.85rem;
 }
 
 .notification {
-    background-color: white;
-    border-color: black;
-    border-width: 5px;
-    width: 100%;
-    padding: 5px;
-    float: left;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    border-left: 4px solid var(--danger);
 }
 
-#notification-head {
-    margin-left: 2em;
-    padding-bottom: 1em;
+.notification-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.notify-dismiss {
+    align-self: flex-start;
 }
 
 .notify-head {
-    background-color: red;
-    color: white;
-    border-width: 2em;
-    border-color: black;
-    font-size: 32px;
-    padding: 5px;
+    font-size: 1.05rem;
+    margin: 0.5rem 0 0.35rem;
 }
 
 .notify-description {
-    background-color: white;
-    color: black;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
 }
 
-.notify-suggesstion {
-    background-color: blue;
-    color: white;
+.notify-tip {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    border-radius: var(--radius-sm);
+    padding: 0.65rem 0.85rem;
+    font-weight: 600;
+    font-size: 0.925rem;
 }
 
-#notification-none {
-    font-size: 24px;
-    background-color: white;
-    width: 100%;
-    padding: 1em;
-}
-
-#turnOnNotifications {
-    font-size: 28px;
-    margin-left: 1px;
+.notify-tip .material-symbols-rounded {
+    font-size: 20px;
 }
 
 #switch-label {
-    margin-left: 1em;
+    flex: 1;
+    cursor: pointer;
 }

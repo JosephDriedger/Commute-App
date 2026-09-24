@@ -1,111 +1,108 @@
 var currentUser;
 
-// Number of Notifications
-var numOfNotifications = 0;
-
-// Display Message if No Notifications are Available.
-function displayNoneNotification() {
-    if (numOfNotifications === 0) {
-        document.getElementById("notification-none").hidden = false;
+firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+        currentUser = db.collection("users").doc(user.uid);
+        loadNotificationSettings();
+        postNotifications(user);
     } else {
-        document.getElementById("notification-none").hidden = true;
+        window.location.href = "./login";
     }
-}
-displayNoneNotification();
+});
 
 function loadNotificationSettings() {
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            currentUser = db.collection("users").doc(user.uid);
-            currentUser.get()
-            .then(userDoc => {
-                var pushNotifications = userDoc.data().pushNotifications;
-
-                if (pushNotifications != null) {
-                    document.getElementById("turnOnNotifications").checked = pushNotifications;
-                } else {
-                    document.getElementById("turnOnNotifications").checked = false;
-                    pushNotifications = document.getElementById("turnOnNotifications").checked;
-                }
-            })
-        }
-    });
+    currentUser.get()
+        .then(userDoc => {
+            let pushNotifications = userDoc.exists && userDoc.data().pushNotifications;
+            document.getElementById("turnOnNotifications").checked = pushNotifications === true;
+        })
+        .catch(error => console.log("Error loading notification settings: ", error));
 }
-loadNotificationSettings();
 
 function saveNotifications() {
-    pushNotifications = document.getElementById("turnOnNotifications").checked;
+    let pushNotifications = document.getElementById("turnOnNotifications").checked;
 
-    currentUser.update({
+    currentUser.set({
         pushNotifications: pushNotifications
-    }).then(() => {
-        if (pushNotifications == true) {
-            console.log("Push Notifications turned ON.");
-        } else {
-            console.log("Push Notfiications turned OFF");
-        }
+    }, { merge: true })
+    .then(() => {
+        showToast("Push notifications turned " + (pushNotifications ? "on." : "off."));
     })
+    .catch(error => {
+        console.log("Error saving notification settings: ", error);
+        showToast("Could not save your notification setting.", "error");
+    });
 }
 
-// --------------------------------------------------
-// DON'T RUN THE POST NOTIFICATIONS BUTTON RIGHT NOW.
-// --------------------------------------------------
-function postNotifications() {
+// Display each of the user's notifications as a card.
+function postNotifications(user) {
     let notificationTemplate = document.getElementById("notificationTemplate");
     let notificationGroup = document.getElementById("notification-group");
 
-    firebase.auth().onAuthStateChanged(user => {
-        db.collection("users").doc(user.uid).collection("Notifications")
+    db.collection("users").doc(user.uid).collection("Notifications")
         .get()
         .then(allIncidents => {
+            notificationGroup.innerHTML = "";
             allIncidents.forEach(doc => {
-                var routeImpacted = doc.data().route;
-                var incidentDescription = doc.data().description;
-                var suggestion = doc.data().suggestion;
-                let testNotificationCard = notificationTemplate.content.cloneNode(true);
+                let incident = doc.data();
+                let notificationCard = notificationTemplate.content.cloneNode(true);
 
-                if (routeImpacted != null) {
-                    testNotificationCard.querySelector('.notify-head').innerHTML = routeImpacted;
-                } else {
-                    testNotificationCard.querySelector('.notify-head').innerHTML = "YOUR ROUTES ARE IMPACTED";
-                }
+                notificationCard.querySelector('.notify-head').textContent =
+                    incident.route || "Your Routes Are Impacted";
+                notificationCard.querySelector('.notify-description').textContent =
+                    incident.description || "Empty Description.";
+                notificationCard.querySelector('.notify-suggestion').textContent =
+                    incident.suggestion || "No suggestions available.";
+                notificationCard.querySelector('.notify-dismiss')
+                    .addEventListener("click", () => dismissNotification(doc.id, incident));
 
-                if (incidentDescription != null) {
-                    testNotificationCard.querySelector('.notify-description').innerHTML = incidentDescription;
-                } else {
-                    testNotificationCard.querySelector('.notify-description').innerHTML = "Empty Description.";
-                }
-
-                if (suggestion != null) {
-                    testNotificationCard.querySelector('.notify-suggestion').innerHTML = suggestion;
-                } else {
-                    testNotificationCard.querySelector('.notify-suggestion').innerHTML = "No suggestions available.";
-                }
-
-                notificationGroup.appendChild(testNotificationCard);
-
-                numOfNotifications++;
-            })
-            document.getElementById("notify-num").innerHTML = numOfNotifications;
-            displayNoneNotification();
+                notificationGroup.appendChild(notificationCard);
+            });
+            document.getElementById("notification-none").hidden = allIncidents.size > 0;
         })
-    })
+        .catch(error => console.log("Error loading notifications: ", error));
 }
 
-postNotifications();
+function dismissNotification(notificationId, incident) {
+    currentUser.collection("Notifications").doc(notificationId).delete()
+        .then(() => {
+            refreshAlerts();
+            showToast("Alert dismissed.", "success", {
+                label: "Undo",
+                onClick: () => restoreNotification(notificationId, incident)
+            });
+        })
+        .catch(error => {
+            console.log("Error dismissing notification: ", error);
+            showToast("Could not dismiss this alert.", "error");
+        });
+}
+
+function restoreNotification(notificationId, incident) {
+    currentUser.collection("Notifications").doc(notificationId).set(incident)
+        .then(() => {
+            refreshAlerts();
+            showToast("Alert restored.");
+        })
+        .catch(error => {
+            console.log("Error restoring notification: ", error);
+            showToast("Could not restore this alert.", "error");
+        });
+}
+
+function refreshAlerts() {
+    let user = firebase.auth().currentUser;
+    postNotifications(user);
+    updateNotificationCount(user);
+}
 
 // Test Purposes
 function createNotification() {
-    firebase.auth().onAuthStateChanged(user => {
-        let notification = db.collection("users").doc(user.uid).collection("Notifications");
-        notification.add({
-            route: "Route 1",
-            description: "Accident on Highway 1",
-            suggestion: "Leave 1 hour earlier"
-        }).then(function() {
-            console.log("Notification Added")
-        }) 
-        loadNotificationSettings();
-    })
-    
+    currentUser.collection("Notifications").add({
+        route: "Route 1",
+        description: "Accident on Highway 1",
+        suggestion: "Leave 1 hour earlier"
+    }).then(function () {
+        console.log("Notification Added");
+    });
 }
