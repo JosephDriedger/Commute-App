@@ -43,8 +43,8 @@ firebase deploy --only firestore:rules
 
 ## Deploying
 
-The site is live at https://comp1800-5ce0f.web.app on Firebase Hosting, which serves static
-files. `npm run build:site` assembles them into `dist/`, and hosting rebuilds before every deploy.
+The site is live at https://commuteapp.web.app on Firebase Hosting, which serves static
+files. Deploys go to the commuteapp site, set by `site` in `firebase.json`. `npm run build:site` assembles them into `dist/`, and hosting rebuilds before every deploy.
 
 ```
 npm install
