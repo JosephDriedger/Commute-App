@@ -1,30 +1,61 @@
-<div class="container container-search">    
-
-    <div class="form">
-        <i class="fa fa-search"></i>
-        <input type="text" id="myInput" class="form-control form-input search-input" onkeyup="search()" placeholder="Search">
-        <span class="left-pan"><i class="fa fa-microphone"></i></span>
-        <ul id="searchResults" class="results">
-
-            <li><a href="#" onclick="">
-                BCIT
-            </a></li>
-          
-            <li><a href="#" onclick="loadRoute(1)">
-                Metrotown
-            </a></li>
-            <li><a href="#" onclick="loadRoute(3)">
-                BCIT Downtown Campus
-            </a></li>
-          
-            <li><a href="#" onclick="loadRoute(5)">
-                Vancouver International Airport (YVR)
-            </a></li>
-            <li><a href="#" onclick="loadRoute(6)">5608 Clinton St</a></li>
-            <li><a href="#" onclick="loadRoute(7)">Brentwood Town Centre</a></li>
-          </ul>
+<div class="search-card">
+    <div class="trip-fields">
+        <div class="trip-field">
+            <span class="material-symbols-rounded field-icon">trip_origin</span>
+            <input type="text" id="fromInput" class="trip-input" placeholder="Choose a starting point" autocomplete="off" data-field="from">
+            <button type="button" class="btn btn-ghost btn-sm locate-me" title="Use My Location" aria-label="Use My Location">
+                <span class="material-symbols-rounded">my_location</span>
+            </button>
+        </div>
+        <div class="trip-field">
+            <span class="material-symbols-rounded field-icon end">place</span>
+            <input type="text" id="toInput" class="trip-input" placeholder="Where are you going?" autocomplete="off" data-field="to">
+            <button type="button" class="btn btn-ghost btn-sm swap-ends" title="Swap Start and Destination" aria-label="Swap Start and Destination">
+                <span class="material-symbols-rounded">swap_vert</span>
+            </button>
+        </div>
     </div>
-    
+
+    <div class="mode-chips" role="group" aria-label="Trip Mode">
+        <button type="button" class="mode-chip selected" data-mode="Drive"><span class="material-symbols-rounded">directions_car</span>Drive</button>
+        <button type="button" class="mode-chip" data-mode="Bus or SkyTrain"><span class="material-symbols-rounded">directions_transit</span>Transit</button>
+        <button type="button" class="mode-chip" data-mode="Bike"><span class="material-symbols-rounded">directions_bike</span>Bike</button>
+        <button type="button" class="mode-chip" data-mode="Walk"><span class="material-symbols-rounded">directions_walk</span>Walk</button>
+    </div>
+
+    <div class="search-actions">
+        <button type="button" class="btn btn-primary w-100" id="goButton">
+            <span class="material-symbols-rounded">directions</span> Get Directions
+        </button>
+    </div>
+
+    <!-- Place suggestions for whichever field is being edited -->
+    <div class="search-results-wrap" id="suggestionsWrap" hidden>
+        <div class="section-title" id="suggestionsTitle">Saved Places</div>
+        <ul id="searchResults" class="results"></ul>
+        <p id="searchEmpty" class="search-empty" hidden>No places match your search.</p>
+    </div>
+
+    <!-- Route summary and turn by turn steps -->
+    <div class="trip-result" id="tripResult" hidden>
+        <div class="trip-summary">
+            <div>
+                <strong id="tripDuration"></strong>
+                <span id="tripDistance" class="text-muted"></span>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm" id="clearTrip" title="Clear Route" aria-label="Clear Route">
+                <span class="material-symbols-rounded">close</span>
+            </button>
+        </div>
+        <p class="trip-note" id="tripNote" hidden></p>
+        <div class="trip-buttons">
+            <button type="button" class="btn btn-light btn-sm" id="saveTripRoute">
+                <span class="material-symbols-rounded">bookmark_add</span> Save as Route
+            </button>
+            <button type="button" class="btn btn-light btn-sm" id="toggleSteps">
+                <span class="material-symbols-rounded">list</span> Steps
+            </button>
+        </div>
+        <ol class="trip-steps" id="tripSteps" hidden></ol>
+    </div>
 </div>
-
-

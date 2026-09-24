@@ -1,18 +1,83 @@
-#map {
-  width: 100%;
-  height: 90%;
-  position: absolute;
-  margin:0;
-  padding:0; 
-  border: 1px solid black;
+.map-page {
+  height: 100vh;
+  overflow: hidden;
 }
+
+.map-shell {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+#map {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 0;
+}
+
 .overlay {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: min(400px, calc(100% - 32px));
+  z-index: 1000;
+}
 
-	width: 50%;
-    position: absolute;
-    top: 4.5rem;
-    left: 4em;
+/* Keep the zoom buttons clear of the search card */
+.leaflet-top.leaflet-left {
+  left: auto;
+  right: 0;
+}
 
+.leaflet-top.leaflet-left .leaflet-control {
+  margin: 16px 16px 0 0;
+}
 
-    z-index: 1000
+/* Dim the map tiles to match a dark theme */
+.leaflet-tile-pane {
+  filter: var(--map-tiles);
+}
+
+.leaflet-bar {
+  border: none !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(22, 26, 58, 0.15) !important;
+}
+
+.leaflet-bar a {
+  width: 38px !important;
+  height: 38px !important;
+  line-height: 38px !important;
+  color: #161a3a !important;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(22, 26, 58, 0.18);
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+.leaflet-popup-content {
+  margin: 14px 18px;
+  line-height: 1.5;
+}
+
+@media (max-width: 575.98px) {
+  /* The search card spans the full width on phones */
+  .leaflet-top.leaflet-left {
+    top: 72px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .map-page.signed-in {
+    padding-bottom: 0;
+  }
+
+  .map-page.signed-in .map-shell {
+    margin-bottom: var(--tabbar-height);
+  }
 }
