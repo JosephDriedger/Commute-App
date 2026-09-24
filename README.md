@@ -36,15 +36,18 @@ the same tidy paths Firebase serves in production, so `/routes` works here exact
 live. It has no dependencies.
 
 Firestore security rules live in `firestore.rules`. Each user can only read and write their own
-data under `users/{uid}`. Deploy the rules with:
+data under `users/{uid}`. They are deployed separately from the site:
 ```
-firebase deploy --only firestore:rules
+npx firebase deploy --only firestore:rules
 ```
 
 ## Deploying
 
-The site is live at https://comp1800-5ce0f.web.app on Firebase Hosting, which serves static
-files. `npm run build:site` assembles them into `dist/`, and hosting rebuilds before every deploy.
+The site is live at https://commuteapp.web.app on Firebase Hosting, which serves static files.
+`npm run build:site` assembles them into `dist/`, and hosting rebuilds before every deploy.
+
+Deploys go to the `commuteapp` site, set by `site` in `firebase.json`. The project also has its
+original site at comp1800-5ce0f.web.app, which is no longer deployed to and will go out of date.
 
 ```
 npm install
